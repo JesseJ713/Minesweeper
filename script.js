@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let width = 10;
   let squares = [];
   let bombAmount = 20;
+  let flags = 0;
   let isGameOver = false;
 
   //Function to create the board
@@ -22,10 +23,16 @@ document.addEventListener("DOMContentLoaded", () => {
       grid.appendChild(square);                                //Appending new divs into our grid
       squares.push(square);                                    //Assigning new divs into our global array
 
-      //Normal Click
+      //Left Click
       square.addEventListener("click", function(e) {
         click(square);
       })
+
+      //Right Click
+      square.oncontextmenu = function(e) {
+        e.preventDefault();
+        addFlag(square);
+      }
     }
 
     //Adding functionality so that the squares can detect bombs around them 
@@ -57,7 +64,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //Calling function to create the board  
-  createBoard();                                               
+  createBoard();   
+  
+  //Adding Flag with right clicks
+  function addFlag(square) {
+    if (isGameOver) return;
+    if (!square.classList.contains("checked") && (flags < bombAmount)) {
+      if (!square.classList.contains("flag")) {
+        square.classList.add("flag");
+        square.innerHTML = "🚩";
+        flags++;
+      } else {
+        square.classList.remove("flag");
+        square.innerHTML = "";
+        flags--;
+      }
+    }
+  }
 
   //Click on square actions
   function click(square) {
@@ -65,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isGameOver) return;
     if (square.classList.contains("checked") || square.classList.contains("flag")) return;
     if (square.classList.contains("bomb")) {
-      console.log("GAME OVER!");
+      gameOver(square);
     } else {
       let total = square.getAttribute("data");
       if (total !=0) {
@@ -127,6 +150,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, 10);
   }
+
+  //Game over function
+  function gameOver (square) {
+    console.log("BOOM! GAME OVER!");
+    isGameOver = true;
+
+
+  //Show all bombs on loss
+    squares.forEach(square => {
+      if (square.classList.contains("bomb")) {
+        square.innerHTML = '💣';
+      }
+    })
+  }
+
+  //Check for Win
 
   
 });
