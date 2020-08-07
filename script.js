@@ -75,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
         square.innerHTML = "🚩";
         flags++;
         checkForWin();
-        isGameOver = true;
       } else {
         square.classList.remove("flag");
         square.innerHTML = "";
@@ -176,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if (matches === bombAmount) {
         console.log("YOU WIN!!!!!!");
+        isGameOver = true;
       }
     }
   }
