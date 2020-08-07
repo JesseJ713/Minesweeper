@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   }
-  
+
   //Calling function to create the board  
   createBoard();                                               
 
@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         square.innerHTML = total;
         return;
       }
+      square.classList.add("checked");
     }
   }
 
