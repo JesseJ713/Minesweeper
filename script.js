@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < width * width; i++) {
       const square = document.createElement("div");            //Creating div squares for our board
       square.setAttribute("id", i);                            //Labeling each div with a unique ID as the loop runs
+      square.classList.add(shuffledArray[i]);                  //This will reference back to the shuffled index and label the div with the corresponding string inside of it
       grid.appendChild(square);                                //Appending new divs into our grid
       squares.push(square);                                    //Assigning new divs into our global array
     }
