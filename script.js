@@ -20,6 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
       square.classList.add(shuffledArray[i]);                  //This will reference back to the shuffled index and label the div with the corresponding string inside of it
       grid.appendChild(square);                                //Appending new divs into our grid
       squares.push(square);                                    //Assigning new divs into our global array
+
+      //Normal Click
+      square.addEventListener("click", function(e) {
+        click(square);
+      })
     }
 
     //Adding functionality so that the squares can detect bombs around them 
@@ -40,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         squares[i].setAttribute("data", total);
-        console.log(squares[i]);
       }
     }
 
@@ -50,8 +54,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   }
+  
+  //Calling function to create the board  
+  createBoard();                                               
 
-  createBoard();                                               //Calling function to create the board
+  //Click on square actions
+  function click(square) {
+    if (square.classList.contains("bomb")) {
+      console.log("GAME OVER!");
+    } else {
+      let total = square.getAttribute("data");
+      if (total !=0) {
+        square.classList.add("checked");
+        square.innerHTML = total;
+        return;
+      }
+    }
+  }
 
   
 });
