@@ -21,6 +21,34 @@ document.addEventListener("DOMContentLoaded", () => {
       grid.appendChild(square);                                //Appending new divs into our grid
       squares.push(square);                                    //Assigning new divs into our global array
     }
+
+    //Adding functionality so that the squares can detect bombs around them 
+    for (let i = 0; i < squares.length; i++) {
+      let total = 0;
+      const isLeftEdge = (i % width === 0);                    // Defining the left edge of board so that squares do not consider those that aren't visibly next to them               
+      const isRightEdge = (i % width === width - 1);           // Defining the right edge of board so that squares do not consider those that aren't visibly next to them
+      
+      if (squares[i].classList.contains("valid")) {
+        if (i > 0 && !isLeftEdge && squares[i-1].classList.contains("bomb")) total++;                      //Checking West
+        if (i > 9 && !isRightEdge && squares[i+1-width].classList.contains("bomb")) total ++;              //Checking North East
+        if (i > 10 && squares[i - width].classList.contains("bomb")) total ++;                             //Checking North
+        if (i > 11 && !isLeftEdge && squares[i-1-width].classList.contains("bomb")) total ++;              //Checking North West
+        if (i < 98 && !isRightEdge && squares[i+1].classList.contains("bomb")) total++;                    //Checking East
+        if (i < 90 && !isLeftEdge && squares[i-1+width].classList.contains("bomb")) total++;               //Checking South West
+        if (i < 88 && !isRightEdge && squares [i+1+width].classList.contains("bomb")) total++;             //Checking South East
+        if (i < 89 && squares[i+width].classList.contains("bomb")) total++;                                //Checking South
+
+
+        squares[i].setAttribute("data", total);
+        console.log(squares[i]);
+      }
+    }
+
+
+
+
+
+
   }
 
   createBoard();                                               //Calling function to create the board
