@@ -74,6 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
         square.classList.add("flag");
         square.innerHTML = "🚩";
         flags++;
+        checkForWin();
+        isGameOver = true;
       } else {
         square.classList.remove("flag");
         square.innerHTML = "";
@@ -166,6 +168,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //Check for Win
-
+  function checkForWin() {
+    let matches = 0;
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i].classList.contains("flag") && squares[i].classList.contains("bomb")) {
+        matches++;
+      }
+      if (matches === bombAmount) {
+        console.log("YOU WIN!!!!!!");
+      }
+    }
+  }
   
 });
